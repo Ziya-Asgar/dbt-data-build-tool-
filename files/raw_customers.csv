@@ -1,0 +1,7 @@
+customer_id,customer_name,email,registration_date,city,country
+101,John Smith,john@email.com,2022-06-15,New York,USA
+102,Sarah Johnson,sarah@email.com,2022-07-20,London,UK
+103,Mike Davis,mike@email.com,2022-08-10,Paris,France
+104,Lisa Wilson,lisa@email.com,2022-09-05,Tokyo,Japan
+105,Tom Brown,tom@email.com,2022-10-12,Sydney,Australia
+106,Emma Taylor,emma@email.com,2022-11-08,Berlin,Germany
