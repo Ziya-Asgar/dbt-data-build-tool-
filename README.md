@@ -141,7 +141,7 @@ dbt Core searches for the parent directory of `profiles.yml` in the following or
 
 > Note: dbt Core supports using the `DBT_PROFILES_DIR` environment variable or a `profiles.yml` file in the current working directory. These options aren't currently supported in Fusion.
 
-Another important file - `dbt_project.yml` - is linked to the `profiles.yml` file. The `profile` field in `dbt_project.yml` references the profile name defined in profiles.yml. For example, below part from an example `dbt_project.yml` file uses `dbt_project_33` as a profile, which is the same profile name used in the above example:
+Another important file - `dbt_project.yml` - is linked to the `profiles.yml` file. The `profile` field in `dbt_project.yml` references the profile name defined in `profiles.yml`. For example, below part from an example `dbt_project.yml` file uses `demodbt_33` as a profile, which is the same profile name used in the above example:
 
 ```yml
 # dbt_project.yml
@@ -201,7 +201,7 @@ DBT_SCHEMA=public
 DBT_THREADS=4
 ```
 
-We need to have `python-dotenv` package to load the environment variables. We can run the below command to instal it:
+We need to have `python-dotenv` package to load the environment variables. We can run the below command to install it:
 
 ```sh
 pip install python-dotenv
@@ -220,7 +220,7 @@ This command performs two main actions in sequence:
 
 So it's essentially saying: "Load the `.env` file, then `run dbt debug` with those variables"
 
-Note: Remember to add the `.env` file to the `.gitignore` file, so that your important data added to the `.env` file is not shared with everyone, when you push your project to a public repository
+> Note: Remember to add the `.env` file to the `.gitignore` file, so that your important data added to the `.env` file is not shared with everyone, when you push your project to a public repository
 
 ---
 
@@ -228,8 +228,8 @@ Note: Remember to add the `.env` file to the `.gitignore` file, so that your imp
 
 dbt supports multiple targets within one profile to encourage the use of separate development and production environments. When running dbt commands, you can specify which profile and target to use from the CLI using the `--profile` and `--target` flags.
 
-- `--profile` flag - Overrides the profile set in `dbt_project.yml` by pointing to another profile defined in profiles.yml.
-- `--target` flag - Specifies the target within that profile to use (as defined in profiles.yml).
+- `--profile` flag - Overrides the profile set in `dbt_project.yml` by pointing to another profile defined in `profiles.yml`.
+- `--target` flag - Specifies the target within that profile to use (as defined in `profiles.yml`).
 
 These flags help when you're working with multiple profiles and targets and want to override defaults without changing your files.
 
@@ -274,13 +274,15 @@ To list a specific command's arguments, run `dbt COMMAND_NAME --help`.
 
 ## dbt folders
 
-- The macros are blocks of code that you can reuse multiple times (similar to functions in programming languages). In the default folder structure of dbt, there is a folder named macros to store all the macros.
-- The models folder includes all the data models for a project.
-- The target folder includes the compiled SQL.
-  - The run folder shows the create or replace table statements that are running
-- The logs folder includes information on how dbt Core logs all of the action happening within your project.
-- The snapshots folder captures the state of your mutable tables so you can refer to it later.
-- The seeds folder includes CSV files with static data that you can load into your data platform with dbt.
+The default dbt project (created after the `dbt init` command) comes with the below folder structure:
+
+- The macros are blocks of code that you can reuse multiple times (similar to functions in programming languages). In the default folder structure of dbt, there is a folder named **macros** to store all the macros.
+- The **models** folder includes all the data models for a project.
+- The **target** folder includes the compiled SQL.
+  - The **run** folder shows the `create or replace` table statements that are running
+- The **logs** folder includes information on how dbt Core logs all of the action happening within your project.
+- The **snapshots** folder captures the state of your mutable tables so you can refer to it later.
+- The **seeds** folder includes CSV files with static data that you can load into your data platform with dbt.
 
 ---
 
@@ -288,9 +290,9 @@ To list a specific command's arguments, run `dbt COMMAND_NAME --help`.
 
 ## Models
 
-The models let dbt know how to build a specific data set. Models, in dbt, are generally SQL scripts with jinja (Starting in version 1.3, dbt Core and dbt support Python models). Each model lives in a single file and contains logic that either transforms raw data into a dataset that is ready for analytics or, more often, is an intermediate step in such a transformation.
+Models, in dbt, are generally SQL scripts with jinja (Starting in version 1.3, dbt Core and dbt support Python models). Each model lives in a single file and contains logic that either transforms raw data into a dataset that is ready for analytics or, more often, is an intermediate step in such a transformation.
 
-When you execute `dbt run`, you are running a model that will transform your data without that data ever leaving your warehouse. Models are primarily written as a `select` statement and saved as a .sql file.
+When you execute `dbt run`, you are running a model that will transform your data without that data ever leaving your warehouse. Models are primarily written as a `select` statement and saved as a `.sql` file.
 
 To practice on a building a simple model, let's say we have `orders` and `customers` table in a postgreSQL database schema called `raw`. We can create the below model to transform the data.
 
