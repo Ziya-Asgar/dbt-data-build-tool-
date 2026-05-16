@@ -349,7 +349,7 @@ Configurations are "model settings" that you can set in your `dbt_project.yml` f
 - Build models in a target schema you define
 - Use your file name as the view or table name in the database
 
-For example, below configuration shows that we want the models in the order_summary directory to materialize as views.
+For example, below configuration shows that we want the models in the `order_summary` directory to materialize as views.
 
 ```yml
 # dbt_project.yml
@@ -545,7 +545,7 @@ models:
         - v: ... # declare additional versions
 ```
 
-Here is a smaller example .yml file for the models that we created above:
+Here is a smaller example `.yml` file for the models that we created above:
 
 ```yml
 # models/order_summary/model_properties.yml
