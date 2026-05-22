@@ -1065,33 +1065,33 @@ dbt Labs strongly recommends only running unit tests in development or CI enviro
 
 ## Seeds
 
-Seeds are CSV files in your dbt project (typically in your seeds directory), that dbt can load into your data warehouse using the `dbt seed` command. Seeds can be referenced in downstream models the same way as referencing models — by using the `ref` function.
+Seeds are CSV files in your dbt project (typically in your **seeds** directory), that dbt can load into your data warehouse using the `dbt seed` command. Seeds can be referenced in downstream models the same way as referencing models — by using the `ref` function.
 
 To load a seed file in your dbt project:
 
-- Add the file to your seeds directory, with a .csv file extension
+- Add the file to your **seeds** directory, with a `.csv` file extension
 - Run the `dbt seed` command — a new table will be created in your warehouse in your target schema
 - Refer to seeds in downstream models using the `ref` function.
 
-In the below example, we are referring to a table seeded with csv and `dbt seed` command.
+In the example below, we are referring to a table seeded with csv and `dbt seed` command.
 
 ```sql
 -- models/customer_counts_by_region/customer_counts_by_region.sql
-with customers as (
-    select * from {{ source('raw_data', 'customers') }}
+WITH customers AS (
+  SELECT * FROM {{ source('raw_data', 'customers') }}
 ),
 
-regions as (
-    select * from {{ ref('country_regions') }}
+regions AS (
+  SELECT * FROM {{ ref('country_regions') }}
 )
 
-select
-    r.region,
-    count(c.customer_id) as total_customers
-from customers c
-join regions r on c.country = r.country
-group by r.region
-order by total_customers desc
+SELECT
+  r.region,
+  COUNT(c.customer_id) AS total_customers
+FROM customers c
+JOIN regions r ON c.country = r.country
+GROUP BY r.region
+ORDER BY total_customers DESC
 ```
 
 ```yml
@@ -1142,6 +1142,7 @@ When used in a dbt model, your Jinja needs to compile to a valid query. To check
 In the below example, we set three variables: a basic string, an array, and a dictionary. Then, we use them in our SQL code:
 
 ```jinja
+<!-- demodbt_33/models/jinja_demo/jinja_demo.sql -->
 {% set string_var = 'string 1' %}
 {% set list_var = ['list_var 1', 'list_var 2'] %}
 {% set dict_var = {'dict_key1': 'dict_val1', 'dict_key2': 'dict_val2'} %}
@@ -1164,6 +1165,7 @@ SELECT
 Here is an example of using `if`, `elif`, `else`, and `endif` control flow statement. Note that Jinja requires an explicit `{% endif %}` to know exactly where the conditional block closes:
 
 ```jinja
+<!-- demodbt_33/models/jinja_demo/jinja_demo.sql -->
 {% set environment = 'dev' %}
 
 SELECT
