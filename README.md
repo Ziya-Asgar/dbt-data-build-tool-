@@ -1254,6 +1254,7 @@ SELECT
 
 
     'This is a development environment' AS run_type,
+
   'Run complete' AS status
 ```
 
@@ -1280,6 +1281,7 @@ SELECT
 SELECT
   'dev' AS current_env,
     'This is a development environment' AS run_type,
+
   'Run complete' AS status
 ```
 
@@ -1337,7 +1339,9 @@ Here is an example of looping through a dictionary:
 {% set user_info = {'name': 'John', 'city': 'New York', 'role': 'Admin'} %}
 
 {% for key, value in user_info.items() %}
-  SELECT '{{ key }}' AS attribute, '{{ value }}' AS detail
+  SELECT
+    '{{ key }}' AS attribute,
+    '{{ value }}' AS detail
 
   {%- if not loop.last %}
     UNION ALL
@@ -1351,7 +1355,9 @@ If we don't use the `items` method, the `for` loop will only loop through the di
 {% set user_info = {'name': 'John', 'city': 'New York', 'role': 'Admin'} %}
 
 {% for key in user_info %}
-  SELECT '{{ key }}' AS attribute, '{{ user_info[key] }}' AS detail
+  SELECT
+    '{{ key }}' AS attribute,
+    '{{ user_info[key] }}' AS detail
 
   {%- if not loop.last %}
     UNION ALL
@@ -1410,7 +1416,7 @@ SELECT
   {% if current_value > 2 %}   'Greater than 2' {% endif %} AS test_gt,
   {% if current_value < 20 %}  'Less than 20' {% endif %} AS test_lt,
   {% if current_value >= 10 %} 'Greater or equal to 10' {% endif %} AS test_gte,
-  {% if current_value <= 11 %}  'Less or equal to 9' {% endif %} AS test_lte
+  {% if current_value <= 11 %}  'Less or equal to 11' {% endif %} AS test_lte
 ```
 
 ---
