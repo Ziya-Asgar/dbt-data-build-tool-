@@ -1423,14 +1423,14 @@ SELECT
 
 ### Variable Tests
 
-Within dbt, you may need to validate if a variable is defined or a if a value is odd or even. These Jinja Variable tests allow you to validate with ease.
+Within dbt, we may need to validate if a variable is defined or if a value is odd or even. Jinja Variable tests allow us to validate variables:
 
-- `Is Defined`
-- `Is None`
-- `Is Even`
-- `Is Odd`
-- `Is a String`
-- `Is a Number`
+- Is defined
+- Is none
+- Is even
+- Is odd
+- Is a string
+- Is a number
 
 Here is a simple example demonstrating all of these tests:
 
@@ -1452,20 +1452,24 @@ SELECT
 
 ### dbt Jinja: Filters (aka Methods)
 
-Jinja filters in dbt allow you to transform variables and expressions during the compilation phase using the pipe symbol (`|`).
+Jinja filters dbt allow us to transform variables and expressions during the compilation phase using the pipe symbol (`|`). Here are a few filters:
 
 - `lower` / `upper`: Converts text to lowercase or uppercase.
+- `default()`: Lets to set a default value.
+- `join(<delimiter>)`: joins array items with a provided delimiter.
+
+Here is an example of using some filters:
 
 ```jinja
 {% set arr = ["first_name" , "last_name"] %}
 
 SELECT
-  '{{ "TEST" | lower }}' as col_lower,
-  '{{ "test" | upper }}' as col_upper,
-  '{{ none | default("default_value") }}' as col_default,
-  '{{ arr | join("-") }}' as col_join,
-  '{{ "hello" | replace("hello" , "bye") }}' as col_replace,
-  '{{ " text_with_whitespace " | trim }}' as  col_trim
+  '{{ "TEST" | lower }}' AS col_lower,
+  '{{ "test" | upper }}' AS col_upper,
+  '{{ none | default("default_value") }}' AS col_default,
+  '{{ arr | join("-") }}' AS col_join,
+  '{{ "hello" | replace("hello" , "bye") }}' AS col_replace,
+  '{{ " text_with_whitespace " | trim }}' AS col_trim
 ```
 
 ---
@@ -1474,7 +1478,7 @@ SELECT
 
 ## Macros
 
-Macros in Jinja are pieces of code that can be reused multiple times – they are analogous to "functions" in other programming languages. Macros are defined in .sql files, typically in your macros directory (docs).
+Macros in Jinja are pieces of code that can be reused multiple times – they are analogous to "functions" in other programming languages. Macros are defined in `.sql` files, typically in the **macros** directory (docs).
 
 Macro files can contain one or more macros. We define macros like this:
 
@@ -1499,7 +1503,7 @@ We use the macros like this:
 
 SELECT
   customer_tier,
-  {{ numbers_in_thousands('lifetime_value', 3) }} as l_value_1000s
+  {{ numbers_in_thousands('lifetime_value', 3) }} AS l_value_1000s
 FROM
   {{ ref('order_summary') }}
 ```
@@ -1512,7 +1516,7 @@ FROM
 
 ### Generating Documentations
 
-dbt enables you to generate documentation for your project and data platform. Before generating documentation, add descriptions to your project resources. Add the `description` key to the same YAML files where you declare data tests. For example:
+dbt enables us to generate documentation for our project and data platform. Before generating documentation, we add descriptions to the project resources. More specifically, we add the `description` key to the same YAML files where we declare data tests. For example:
 
 ```yml
 # models/order_summary/model_properties.yml
@@ -1530,11 +1534,11 @@ models:
   # ...
 ```
 
-Generate documentation for your project by following these steps:
+We generate the documentation for our project by following these steps:
 
-1. Run the `dbt docs generate` command to compile relevant information about your dbt project and warehouse into `manifest.json` and `catalog.json` files, respectively.
-2. Ensure you've created the models with `dbt run` or `dbt build` to view the documentation for all columns, not just those described in your project.
-3. Run the `dbt docs serve` command if you're developing locally to use these `.json` files to populate a local website.
+1. Run the `dbt docs generate` command to compile relevant information about the dbt project and warehouse into `manifest.json` and `catalog.json` files, respectively.
+2. Ensure the models are created with `dbt run` or `dbt build` to view the documentation for all columns, not just those described in the project.
+3. Run the `dbt docs serve` command if we're developing locally to use these `.json` files to populate a local website.
 
 ---
 
@@ -1639,14 +1643,14 @@ models:
 
 ## Packages
 
-dbt packages are standalone dbt projects, with models, macros, and other resources that tackle a specific problem area. As a dbt user, by adding a package to your project, all of the package's resources will become part of your own project. This means:
+dbt packages are standalone dbt projects, with models, macros, and other resources that tackle a specific problem area. As a dbt user, by adding a package to our project, all of the package's resources will become part of our own project. This means:
 
-- Models in the package will be materialized when you `dbt run`.
-- You can use `ref` in your own models to refer to models from the package.
-- You can use `source` to refer to sources in the package.
-- You can use macros in the package in your own project.
+- Models in the package will be materialized when we use `dbt run`.
+- We can use `ref` in our own models to refer to models from the package.
+- We can use `source` to refer to sources in the package.
+- We can use macros in the package in our own project.
 
-To add a package to our dbt project, we need to have `packages.yml` file in our project directory. This should be at the same level as your `dbt_project.yml` file. To install the package, we specify the package(s) we wish to add using one of the supported syntaxes. There are a few methods of specifying a package.
+To add a package to our dbt project, we need to have `packages.yml` file in our project directory. This should be at the same level as the `dbt_project.yml` file. To install the package, we specify the package(s) we wish to add using one of the supported syntaxes. There are a few methods of specifying a package:
 
 - [dbt hub](https://hub.getdbt.com/) is where we have various packages that people have built. To install a package from this hub, we specify the package like this:
 
@@ -1657,7 +1661,7 @@ packages:
     version: 0.7.0
 ```
 
-Hub packages require a version to be specified – you can find the latest release number on dbt Hub.
+Hub packages require a version to be specified – we can find the latest release number on dbt Hub.
 
 - Packages stored on a Git server can be installed using the git syntax. Add the Git URL for the package, and optionally specify a revision. The revision can be:
 
@@ -1676,7 +1680,7 @@ packages:
   - local: /opt/dbt/redshift
 ```
 
-- A "local" package is a dbt project accessible from your local file system. You can install local packages by specifying the project's path. It works best when you nest the project within a subdirectory relative to your current project's directory.
+- A "local" package is a dbt project accessible from a local file system. We can install local packages by specifying the project's path. It works best when we nest the project within a subdirectory relative to our current project's directory.
 
 ```yml
 # packages.yml
@@ -1686,9 +1690,9 @@ packages:
 
 When we run `dbt deps` we complete installing the package(s). Packages get installed in the `dbt_packages` directory. This could be changed by changing the value for `packages-install-path` in the `dbt_project.yml` file. Also, by default this directory is ignored by git, to avoid duplicating the source code for the package.
 
-When you update a version or revision in your `packages.yml` file, it isn't automatically updated in your dbt project. You should run `dbt deps` to update the package. You may also need to run a full refresh of the models in this package.
+When we update a version or revision in the `packages.yml` file, it isn't automatically updated in our dbt project. We should run `dbt deps` to update the package. We may also need to run a full refresh of the models in this package.
 
-When you remove a package from your `packages.yml` file, it isn't automatically deleted from your dbt project, as it still exists in your `dbt_packages/` directory. If you want to completely uninstall a package, you should either:
+When we remove a package from our `packages.yml` file, it isn't automatically deleted from our dbt project, as it still exists in the `dbt_packages/` directory. If we want to completely uninstall a package, we should either:
 
 - delete the package directory in `dbt_packages/`; or
 - run `dbt clean` to delete all packages (and any compiled models), followed by `dbt deps`.
