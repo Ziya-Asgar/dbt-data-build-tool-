@@ -1725,6 +1725,7 @@ models:
 ```
 
 ```sql
+-- model file
 {{ config(
     pre_hook="SQL-statement" | ["SQL-statement"],
     post_hook="SQL-statement" | ["SQL-statement"],
@@ -1789,21 +1790,21 @@ Below example uses `dbt_project.yml`, `model_properties.yml`, and the config blo
 # ...
 models:
   demodbt_33:
-    +post-hook: "INSERT INTO dbt_log (message) VALUES ('Finished building {{ this }}')"
+    +post-hook: "INSERT INTO raw_analytics.dbt_log (message) VALUES ('Finished building {{ this }}')"
     # ...
 
 on-run-start:
   # 1. Clean up old log table (Using IF EXISTS so it doesn't error on first run)
-  - "DROP TABLE IF EXISTS dbt_log"
+  - "DROP TABLE IF EXISTS raw_analytics.dbt_log"
 
   # 2. Create a fresh log table for this session
-  - "CREATE TABLE dbt_log (message TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
+  - "CREATE TABLE raw_analytics.dbt_log (message TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
 
   # 3. Log that the run has started
-  - "INSERT INTO dbt_log (message) VALUES ('--- Start of Run ---')"
+  - "INSERT INTO raw_analytics.dbt_log (message) VALUES ('--- Start of Run ---')"
 
 on-run-end:
-  - "INSERT INTO dbt_log (message) VALUES ('--- End of Run ---')"
+  - "INSERT INTO raw_analytics.dbt_log (message) VALUES ('--- End of Run ---')"
 ```
 
 ```yml
@@ -1818,6 +1819,7 @@ models:
       materialized: table
       tags: ["orders", "daily"]
       schema: "analytics"
+      # added a hook
       pre-hook: "INSERT INTO dbt_log (message) VALUES ('Pre-hook: Building daily_orders')"
     columns:
       # ...
